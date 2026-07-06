@@ -1,20 +1,13 @@
-/* HashFunctionOperator.java -- 
-   Copyright (C) 2010 Christophe Bouyer (Hobby One)
+/* HashFunctionOperator.java --
+   版权所有 (C) 2010 Christophe Bouyer (Hobby One)
 
-This file is part of Hash Droid.
+   此文件是 Hash Droid 的一部分。
 
-Hash Droid is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+   Hash Droid 是自由软件：您可以根据自由软件基金会发布的 GNU 通用公共许可证的条款重新分发和/或修改它；无论是许可证的第 3 版，还是（根据您的选择）任何更高版本。
 
-Hash Droid is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+   Hash Droid 的分发是希望它有用，但没有任何担保；甚至没有适销性或特定用途适用性的隐含担保。有关更多详细信息，请参阅 GNU 通用公共许可证。
 
-You should have received a copy of the GNU General Public License
-along with Hash Droid. If not, see <http://www.gnu.org/licenses/>.
+   您应该已经随 Hash Droid 一起收到了 GNU 通用公共许可证的副本。如果没有，请参见 <http://www.gnu.org/licenses/>。
  */
 
 package com.hobbyone.HashDroid;
@@ -67,8 +60,7 @@ public class HashFunctionOperator {
             if (checksumv != null) {
                 value = checksumv.getValue();
                 String StrHex = Long.toHexString(value);
-                sReturnedStr = PrependValue(StrHex, 8); // 32 bits (8 digits in
-                // hexadecimal)
+                sReturnedStr = PrependValue(StrHex, 8); // 32 位（十六进制为 8 位数字）
             }
         } else {
             IMessageDigest MessageDig = HashFactory.getInstance(_sAlgo);
@@ -105,8 +97,7 @@ public class HashFunctionOperator {
                         }
                         value = checksumv.getValue();
                         String StrHex = Long.toHexString(value);
-                        sReturnedStr = PrependValue(StrHex, 8); // 32 bits (8 digits
-                        // in hexadecimal)
+                        sReturnedStr = PrependValue(StrHex, 8); // 32 位（十六进制为 8 位数字）
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
