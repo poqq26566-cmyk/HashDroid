@@ -1,20 +1,13 @@
-/* CompareActivity.java -- 
-   Copyright (C) 2010 Christophe Bouyer (Hobby One)
+/* CompareActivity.java --
+   版权所有 (C) 2010 Christophe Bouyer (Hobby One)
 
-This file is part of Hash Droid.
+   此文件是 Hash Droid 的一部分。
 
-Hash Droid is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+   Hash Droid 是自由软件：您可以根据自由软件基金会发布的 GNU 通用公共许可证的条款重新分发和/或修改它；无论是许可证的第 3 版，还是（根据您的选择）任何更高版本。
 
-Hash Droid is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+   Hash Droid 的分发是希望它有用，但没有任何担保；甚至没有适销性或特定用途适用性的隐含担保。有关更多详细信息，请参阅 GNU 通用公共许可证。
 
-You should have received a copy of the GNU General Public License
-along with Hash Droid. If not, see <http://www.gnu.org/licenses/>.
+   您应该已经随 Hash Droid 一起收到了 GNU 通用公共许可证的副本。如果没有，请参见 <http://www.gnu.org/licenses/>。
  */
 
 package com.hobbyone.HashDroid;
@@ -39,7 +32,7 @@ public class CompareActivity extends Activity {
     private TextView mResultTV = null;
 
     /**
-     * Called when the activity is first created.
+     * 当 Activity 首次创建时调用。
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,7 +49,7 @@ public class CompareActivity extends Activity {
         mCompareButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Perform action on clicks
+                // 点击时执行操作
                 Editable InputEdit1 = mEditText1.getText();
                 String sInputText1 = InputEdit1.toString();
                 Editable InputEdit2 = mEditText2.getText();
@@ -81,7 +74,7 @@ public class CompareActivity extends Activity {
         mClearButton1.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Perform action on clicks
+                // 点击时执行操作
                 mEditText1.setText("");
                 mResultTV.setText("");
             }
@@ -90,7 +83,7 @@ public class CompareActivity extends Activity {
         mClearButton2.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Perform action on clicks
+                // 点击时执行操作
                 mEditText2.setText("");
                 mResultTV.setText("");
             }
