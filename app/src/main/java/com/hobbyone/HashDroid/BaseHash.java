@@ -1,88 +1,66 @@
-/* BaseHash.java -- 
-   Copyright (C) 2001, 2002, 2006 Free Software Foundation, Inc.
+/* BaseHash.java --
+   版权所有 (C) 2001, 2002, 2006 Free Software Foundation, Inc.
 
-This file is a part of GNU Classpath.
+   此文件是 GNU Classpath 的一部分。
 
-GNU Classpath is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or (at
-your option) any later version.
+   GNU Classpath 是自由软件；您可以根据自由软件基金会发布的 GNU 通用公共许可证的条款重新分发和/或修改它；无论是许可证的第 2 版，还是（根据您的选择）任何更高版本。
 
-GNU Classpath is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-General Public License for more details.
+   GNU Classpath 的分发是希望它有用，但没有任何担保；甚至没有适销性或特定用途适用性的隐含担保。有关更多详细信息，请参阅 GNU 通用公共许可证。
 
-You should have received a copy of the GNU General Public License
-along with GNU Classpath; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301
-USA
+   您应该已经随 GNU Classpath 一起收到了 GNU 通用公共许可证的副本；如果没有，请写信给自由软件基金会，地址：51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
-Linking this library statically or dynamically with other modules is
-making a combined work based on this library.  Thus, the terms and
-conditions of the GNU General Public License cover the whole
-combination.
+   将此库静态或动态地与其他模块链接是基于此库的联合工作。因此，GNU 通用公共许可证的条款和条件涵盖整个组合。
 
-As a special exception, the copyright holders of this library give you
-permission to link this library with independent modules to produce an
-executable, regardless of the license terms of these independent
-modules, and to copy and distribute the resulting executable under
-terms of your choice, provided that you also meet, for each linked
-independent module, the terms and conditions of the license of that
-module.  An independent module is a module which is not derived from
-or based on this library.  If you modify this library, you may extend
-this exception to your version of the library, but you are not
-obligated to do so.  If you do not wish to do so, delete this
-exception statement from your version.  */
+   作为特殊例外，此库的版权持有人允许您将此库与独立模块链接以生成可执行文件，无论这些独立模块的许可条款如何，并根据您选择的条款复制和分发生成的可执行文件，前提是您还满足每个链接的独立模块的许可条款和条件。独立模块是不是从此库派生或基于此库的模块。如果您修改此库，您可以将此例外扩展到您的库版本，但您没有义务这样做。如果您不希望这样做，请从您的版本中删除此例外声明。*/
 
 package com.hobbyone.HashDroid;
 
 /**
  * <p>
- * A base abstract class to facilitate hash implementations.
+ * 一个用于促进哈希实现的基础抽象类。
  * </p>
  */
 public abstract class BaseHash implements IMessageDigest {
 
-    // Constants and variables
+    // 常量与变量
     // -------------------------------------------------------------------------
 
     /**
-     * The canonical name prefix of the hash.
+     * 哈希的规范名称前缀。
      */
     protected String name;
 
     /**
-     * The hash (output) size in bytes.
+     * 哈希（输出）大小，以字节为单位。
      */
     protected int hashSize;
 
     /**
-     * The hash (inner) block size in bytes.
+     * 哈希（内部）块大小，以字节为单位。
      */
     protected int blockSize;
 
     /**
-     * Number of bytes processed so far.
+     * 迄今为止已处理的字节数。
      */
     protected long count;
 
     /**
-     * Temporary input buffer.
+     * 临时输入缓冲区。
      */
     protected byte[] buffer;
 
-    // Constructor(s)
+    // 构造方法
     // -------------------------------------------------------------------------
 
     /**
      * <p>
-     * Trivial constructor for use by concrete subclasses.
+     * 供具体子类使用的简单构造方法。
      * </p>
      *
-     * @param name      the canonical name prefix of this instance.
-     * @param hashSize  the block size of the output in bytes.
-     * @param blockSize the block size of the internal transform.
+     * @param name      此实例的规范名称前缀。
+     * @param hashSize  输出的块大小，以字节为单位。
+     * @param blockSize 内部转换的块大小，以字节为单位。
      */
     protected BaseHash(String name, int hashSize, int blockSize) {
         super();
@@ -95,13 +73,13 @@ public abstract class BaseHash implements IMessageDigest {
         resetContext();
     }
 
-    // Class methods
+    // 类方法
     // -------------------------------------------------------------------------
 
-    // Instance methods
+    // 实例方法
     // -------------------------------------------------------------------------
 
-    // IMessageDigest interface implementation ---------------------------------
+    // IMessageDigest 接口实现 ------------------------------------------------
 
     public String name() {
         return name;
@@ -116,7 +94,7 @@ public abstract class BaseHash implements IMessageDigest {
     }
 
     public void update(byte b) {
-        // compute number of bytes still unhashed; ie. present in buffer
+        // 计算尚未哈希的字节数；即缓冲区中存在的字节数
         int i = (int) (count % blockSize);
         count++;
         buffer[i] = b;
@@ -150,16 +128,16 @@ public abstract class BaseHash implements IMessageDigest {
     }
 
     public byte[] digest() {
-        byte[] tail = padBuffer(); // pad remaining bytes in buffer
-        update(tail, 0, tail.length); // last transform of a message
-        byte[] result = getResult(); // make a result out of context
+        byte[] tail = padBuffer(); // 填充缓冲区中的剩余字节
+        update(tail, 0, tail.length); // 消息的最后一次转换
+        byte[] result = getResult(); // 从上下文中生成结果
 
-        reset(); // reset this instance for future re-use
+        reset(); // 重置此实例以供将来重用
 
         return result;
     }
 
-    public void reset() { // reset this instance for future re-use
+    public void reset() { // 重置此实例以供将来重用
         count = 0L;
         for (int i = 0; i < blockSize; ) {
             buffer[i++] = 0;
@@ -168,7 +146,7 @@ public abstract class BaseHash implements IMessageDigest {
         resetContext();
     }
 
-    // methods to be implemented by concrete subclasses ------------------------
+    // 由具体子类实现的方法 ------------------------------------------------
 
     public abstract Object clone();
 
@@ -176,38 +154,34 @@ public abstract class BaseHash implements IMessageDigest {
 
     /**
      * <p>
-     * Returns the byte array to use as padding before completing a hash
-     * operation.
+     * 返回在完成哈希操作之前用作填充的字节数组。
      * </p>
      *
-     * @return the bytes to pad the remaining bytes in the buffer before
-     * completing a hash operation.
+     * @return 在完成哈希操作之前填充缓冲区中剩余字节的字节。
      */
     protected abstract byte[] padBuffer();
 
     /**
      * <p>
-     * Constructs the result from the contents of the current context.
+     * 从当前上下文的内容构造结果。
      * </p>
      *
-     * @return the output of the completed hash operation.
+     * @return 完成的哈希操作的输出。
      */
     protected abstract byte[] getResult();
 
     /**
-     * Resets the instance for future re-use.
+     * 重置实例以供将来重用。
      */
     protected abstract void resetContext();
 
     /**
      * <p>
-     * The block digest transformation per se.
+     * 块摘要转换本身。
      * </p>
      *
-     * @param in     the <i>blockSize</i> long block, as an array of bytes to
-     *               digest.
-     * @param offset the index where the data to digest is located within the input
-     *               buffer.
+     * @param in     要摘要的 <i>blockSize</i> 长的块，作为字节数组。
+     * @param offset 输入缓冲区中要摘要的数据所在的索引。
      */
     protected abstract void transform(byte[] in, int offset);
 }
