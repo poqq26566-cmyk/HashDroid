@@ -1,20 +1,13 @@
-/* FileActivity.java -- 
-   Copyright (C) 2010 Christophe Bouyer (Hobby One)
+/* FileActivity.java --
+   版权所有 (C) 2010 Christophe Bouyer (Hobby One)
 
-This file is part of Hash Droid.
+   此文件是 Hash Droid 的一部分。
 
-Hash Droid is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+   Hash Droid 是自由软件：您可以根据自由软件基金会发布的 GNU 通用公共许可证的条款重新分发和/或修改它；无论是许可证的第 3 版，还是（根据您的选择）任何更高版本。
 
-Hash Droid is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+   Hash Droid 的分发是希望它有用，但没有任何担保；甚至没有适销性或特定用途适用性的隐含担保。有关更多详细信息，请参阅 GNU 通用公共许可证。
 
-You should have received a copy of the GNU General Public License
-along with Hash Droid. If not, see <http://www.gnu.org/licenses/>.
+   您应该已经随 Hash Droid 一起收到了 GNU 通用公共许可证的副本。如果没有，请参见 <http://www.gnu.org/licenses/>。
  */
 
 package com.hobbyone.HashDroid;
@@ -64,7 +57,7 @@ public class FileActivity extends Activity implements Runnable {
     private Uri mSelectedFileUri = null;
 
     /**
-     * Called when the activity is first created.
+     * 当 Activity 首次创建时调用。
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,24 +77,24 @@ public class FileActivity extends Activity implements Runnable {
                 this, R.array.Algo_Array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(adapter);
-        mSpinner.setSelection(5); // MD5 by default
+        mSpinner.setSelection(5); // 默认选择 MD5
 
         mSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView,
                                        View selectedItemView, int position, long id) {
-                // your code here
-                // Hide the copy button
+                // 在此处编写您的代码
+                // 隐藏复制按钮
                 if (!msHash.equals(""))
                     mCopyButton.setVisibility(View.INVISIBLE);
-                // Clean the result text view
+                // 清空结果文本视图
                 if (mResultTV != null)
                     mResultTV.setText("");
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
+                // 在此处编写您的代码
             }
         });
 
@@ -113,7 +106,7 @@ public class FileActivity extends Activity implements Runnable {
                     if (null != openExplorerIntent) {
                         openExplorerIntent.addCategory(Intent.CATEGORY_OPENABLE);
                         openExplorerIntent.setType("*/*");
-                        startActivityForResult(Intent.createChooser(openExplorerIntent, "Select a file"), SELECT_FILE_REQUEST);
+                        startActivityForResult(Intent.createChooser(openExplorerIntent, "选择文件"), SELECT_FILE_REQUEST);
                     }
                 } catch (ActivityNotFoundException e) {
                 }
@@ -123,7 +116,7 @@ public class FileActivity extends Activity implements Runnable {
         mGenerateButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Perform action on clicks
+                // 点击时执行操作
                 if (null != mSelectedFileUri) {
                     miItePos = mSpinner.getSelectedItemPosition();
                     File fileToHash = new File(mSelectedFileUri.getPath());
@@ -143,7 +136,7 @@ public class FileActivity extends Activity implements Runnable {
         mCopyButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Perform action on clicks
+                // 点击时执行操作
                 if (mClipboard != null) {
                     mClipboard.setText(msHash);
                     String sCopied = getString(R.string.copied);
@@ -153,14 +146,13 @@ public class FileActivity extends Activity implements Runnable {
             }
         });
 
-        mCheckBox.setChecked(false); // lower case by default
+        mCheckBox.setChecked(false); // 默认小写
         mCheckBox.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Perform action on clicks
+                // 点击时执行操作
                 if (!msHash.equals("")) {
-                    // A hash value has already been calculated,
-                    // just convert it to lower or upper case
+                    // 哈希值已经计算过，只需将其转换为小写或大写
                     String OldHash = msHash;
                     if (mCheckBox.isChecked()) {
                         msHash = OldHash.toUpperCase();
@@ -181,7 +173,7 @@ public class FileActivity extends Activity implements Runnable {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SELECT_FILE_REQUEST && resultCode == RESULT_OK) {
             if (data != null) {
-                mSelectedFileUri = data.getData(); //The uri with the location of the file
+                mSelectedFileUri = data.getData(); // 包含文件位置的 Uri
                 if (null != mSelectedFileUri) {
                     Cursor cursor = getContentResolver().query(mSelectedFileUri, null, null, null, null);
                     if (cursor != null && cursor.moveToFirst()) {
@@ -236,7 +228,7 @@ public class FileActivity extends Activity implements Runnable {
     }
 
     @Override
-    // Call when the thread is started
+    // 线程启动时调用
     public void run() {
         msHash = "";
         msFileSize = "";
@@ -273,11 +265,11 @@ public class FileActivity extends Activity implements Runnable {
         return String.format("%.2f %sB", lbytes / Math.pow(unit, exp), pre);
     }
 
-    // This method is called when the computation is over
+    // 计算完成后调用此方法
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            // Hide the progress dialog
+            // 隐藏进度对话框
             if (mProgressDialog != null)
                 mProgressDialog.dismiss();
             if (null != mSelectedFileUri) {
@@ -308,14 +300,14 @@ public class FileActivity extends Activity implements Runnable {
                             Function = mFunctions[miItePos];
                         sFileHashTitle = String.format(
                                 res.getString(R.string.Hash), Function, msHash);
-                        // Show the copy button
+                        // 显示复制按钮
                         if (mCopyButton != null)
                             mCopyButton.setVisibility(View.VISIBLE);
                     } else {
                         sFileHashTitle = String.format(
                                 res.getString(R.string.unable_to_calculate),
                                 fileToHash.getName());
-                        // Hide the copy button
+                        // 隐藏复制按钮
                         if (mCopyButton != null)
                             mCopyButton.setVisibility(View.INVISIBLE);
                     }
