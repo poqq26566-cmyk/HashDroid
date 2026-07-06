@@ -1,73 +1,51 @@
-/* HashFactory.java -- 
-   Copyright (C) 2001, 2002, 2003, 2006 Free Software Foundation, Inc.
+/* HashFactory.java --
+   版权所有 (C) 2001, 2002, 2003, 2006 Free Software Foundation, Inc.
 
-This file is a part of GNU Classpath.
+   此文件是 GNU Classpath 的一部分。
 
-GNU Classpath is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or (at
-your option) any later version.
+   GNU Classpath 是自由软件；您可以根据自由软件基金会发布的 GNU 通用公共许可证的条款重新分发和/或修改它；无论是许可证的第 2 版，还是（根据您的选择）任何更高版本。
 
-GNU Classpath is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-General Public License for more details.
+   GNU Classpath 的分发是希望它有用，但没有任何担保；甚至没有适销性或特定用途适用性的隐含担保。有关更多详细信息，请参阅 GNU 通用公共许可证。
 
-You should have received a copy of the GNU General Public License
-along with GNU Classpath; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301
-USA
+   您应该已经随 GNU Classpath 一起收到了 GNU 通用公共许可证的副本；如果没有，请写信给自由软件基金会，地址：51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
-Linking this library statically or dynamically with other modules is
-making a combined work based on this library.  Thus, the terms and
-conditions of the GNU General Public License cover the whole
-combination.
+   将此库静态或动态地与其他模块链接是基于此库的联合工作。因此，GNU 通用公共许可证的条款和条件涵盖整个组合。
 
-As a special exception, the copyright holders of this library give you
-permission to link this library with independent modules to produce an
-executable, regardless of the license terms of these independent
-modules, and to copy and distribute the resulting executable under
-terms of your choice, provided that you also meet, for each linked
-independent module, the terms and conditions of the license of that
-module.  An independent module is a module which is not derived from
-or based on this library.  If you modify this library, you may extend
-this exception to your version of the library, but you are not
-obligated to do so.  If you do not wish to do so, delete this
-exception statement from your version.  */
+   作为特殊例外，此库的版权持有人允许您将此库与独立模块链接以生成可执行文件，无论这些独立模块的许可条款如何，并根据您选择的条款复制和分发生成的可执行文件，前提是您还满足每个链接的独立模块的许可条款和条件。独立模块是不是从此库派生或基于此库的模块。如果您修改此库，您可以将此例外扩展到您的库版本，但您没有义务这样做。如果您不希望这样做，请从您的版本中删除此例外声明。*/
 
 package com.hobbyone.HashDroid;
 
 /**
  * <p>
- * A <i>Factory</i> to instantiate message digest algorithm instances.
+ * 一个用于实例化消息摘要算法实例的 <i>工厂</i>。
  * </p>
  */
 public class HashFactory {
 
-    // Constants and variables
+    // 常量与变量
     // -------------------------------------------------------------------------
 
-    // Constructor(s)
+    // 构造方法
     // -------------------------------------------------------------------------
 
     /**
-     * Trivial constructor to enforce <i>Singleton</i> pattern.
+     * 为强制实现 <i>单例</i> 模式的简单构造方法。
      */
     private HashFactory() {
         super();
     }
 
-    // Class methods
+    // 类方法
     // -------------------------------------------------------------------------
 
     /**
      * <p>
-     * Return an instance of a hash algorithm given its name.
+     * 根据哈希算法的名称返回其实例。
      * </p>
      *
-     * @param name the name of the hash algorithm.
-     * @return an instance of the hash algorithm, or null if none found.
-     * @throws InternalError if the implementation does not pass its self- test.
+     * @param name 哈希算法的名称。
+     * @return 哈希算法的实例，如果未找到则返回 null。
+     * @throws InternalError 如果实现未通过其自检。
      */
     public static IMessageDigest getInstance(String name) {
         if (name == null) {
